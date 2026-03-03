@@ -1,79 +1,31 @@
 import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
+import {structureTool, type DefaultDocumentNodeResolver} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
-import {type StructureBuilder} from 'sanity/structure'
+import {WebPreview} from './components/WebPreview'
 
-// Website URL for preview
-const PREVIEW_URL = 'https://craidrelaunch2026v01.vercel.app'
+// All module types that should get a preview tab
+const previewTypes = [
+  'heroModule',
+  'navigationModule',
+  'philosophyModule',
+  'servicesModule',
+  'teamModule',
+  'doroModule',
+  'reportModule',
+  'footerModule',
+]
 
-// Map schema types to section anchors on the website
-const sectionMap: Record<string, string> = {
-  heroModule: '',
-  navigationModule: '',
-  philosophyModule: '#philosophy',
-  servicesModule: '#services',
-  teamModule: '#team',
-  doroModule: '#doro',
-  reportModule: '#report',
-  footerModule: '#footer',
-}
-
-// Iframe preview component
-const IframePreview = (props: {document: {displayed: {_type: string}}}) => {
-  const type = props.document?.displayed?._type || ''
-  const anchor = sectionMap[type] || ''
-  const url = `${PREVIEW_URL}/${anchor}`
-
-  return (
-    <iframe
-      src={url}
-      style={{
-        width: '100%',
-        height: '100%',
-        border: 'none',
-        background: '#0a0a0f',
-      }}
-      title="Website Preview"
-    />
-  )
-}
-
-// Custom desk structure: each module type gets a form + preview side by side
-const structure = (S: StructureBuilder) =>
-  S.list()
-    .title('Content')
-    .items([
-      // Singleton items with preview for each module
-      ...Object.entries({
-        navigationModule: 'Navigation',
-        heroModule: 'Hero Section',
-        philosophyModule: 'Philosophy Section',
-        servicesModule: 'Services Section',
-        teamModule: 'Team Section',
-        doroModule: 'Doro / Digital Office Section',
-        reportModule: 'Report Section',
-        footerModule: 'Footer Section',
-      }).map(([type, title]) =>
-        S.listItem()
-          .title(title)
-          .child(
-            S.documentTypeList(type)
-              .title(title)
-              .child((documentId: string) =>
-                S.document()
-                  .documentId(documentId)
-                  .schemaType(type)
-                  .views([
-                    S.view.form(),
-                    S.view
-                      .component(IframePreview)
-                      .title('Website Preview'),
-                  ]),
-              ),
-          ),
-      ),
+// Add Website Preview tab to all module documents
+const defaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}) => {
+  if (previewTypes.includes(schemaType)) {
+    return S.document().views([
+      S.view.form(),
+      S.view.component(WebPreview).title('Website Preview'),
     ])
+  }
+  return S.document()
+}
 
 export default defineConfig({
   name: 'default',
@@ -83,7 +35,7 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
-    structureTool({structure}),
+    structureTool({defaultDocumentNode}),
     visionTool(),
   ],
 
