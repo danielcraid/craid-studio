@@ -1,6 +1,6 @@
 import {type ComponentType} from 'react'
 
-const PREVIEW_URL = 'https://craidrelaunch2026v01.vercel.app'
+const PREVIEW_URL = 'https://craidrelaunch2026v002.vercel.app'
 
 const sectionMap: Record<string, string> = {
   heroModule: '',
