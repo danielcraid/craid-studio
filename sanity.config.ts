@@ -1,5 +1,6 @@
 import {defineConfig} from 'sanity'
 import {structureTool, type DefaultDocumentNodeResolver} from 'sanity/structure'
+import {presentationTool} from 'sanity/presentation'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {SplitPreview} from './components/SplitPreview'
@@ -37,6 +38,9 @@ export default defineConfig({
 
   plugins: [
     structureTool({defaultDocumentNode}),
+    presentationTool({
+      previewUrl: 'https://craidrelaunch2026v002.vercel.app',
+    }),
     visionTool(),
   ],
 
