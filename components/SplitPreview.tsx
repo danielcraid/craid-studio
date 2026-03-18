@@ -2,19 +2,27 @@ import {type ComponentType, useState, useCallback} from 'react'
 
 const PREVIEW_URL = 'https://craidrelaunch2026v002.vercel.app'
 
-const sectionMap: Record<string, string> = {
-  heroModule: '#hero',
-  navigationModule: '',
-  philosophyModule: '#philosophy',
-  servicesModule: '#services',
-  teamModule: '#team',
-  doroModule: '#doro',
-  reportModule: '#report',
-  footerModule: '#footer',
-}
+// Module types that get their own isolated preview
+const moduleTypes = [
+  'heroModule',
+  'navigationModule',
+  'philosophyModule',
+  'servicesModule',
+  'teamModule',
+  'doroModule',
+  'reportModule',
+  'footerModule',
+]
 
 function getPreviewUrl(doc: any) {
   const type = doc?._type || ''
+
+  // Module → isolated preview (only that module)
+  if (moduleTypes.includes(type)) {
+    return `${PREVIEW_URL}/preview/${type}`
+  }
+
+  // Page → show the page by slug
   if (type === 'page') {
     const slug = doc?.slug?.current
     if (slug && slug !== 'home') {
@@ -22,9 +30,7 @@ function getPreviewUrl(doc: any) {
     }
     return PREVIEW_URL
   }
-  if (sectionMap[type] !== undefined) {
-    return `${PREVIEW_URL}/${sectionMap[type]}`
-  }
+
   return PREVIEW_URL
 }
 

@@ -38,6 +38,42 @@ export const heroBlock = defineType({
   },
 })
 
+const richTextContent = [
+  {
+    type: 'block',
+    styles: [
+      {title: 'Normal', value: 'normal'},
+      {title: 'H2', value: 'h2'},
+      {title: 'H3', value: 'h3'},
+      {title: 'H4', value: 'h4'},
+      {title: 'Quote', value: 'blockquote'},
+    ],
+    marks: {
+      decorators: [
+        {title: 'Bold', value: 'strong'},
+        {title: 'Italic', value: 'em'},
+        {title: 'Underline', value: 'underline'},
+      ],
+      annotations: [
+        {
+          name: 'link',
+          title: 'Link',
+          type: 'object',
+          fields: [{name: 'href', title: 'URL', type: 'url'}],
+        },
+      ],
+    },
+  },
+  {
+    type: 'image',
+    options: {hotspot: true},
+    fields: [
+      {name: 'alt', title: 'Alt Text', type: 'string'},
+      {name: 'caption', title: 'Bildunterschrift', type: 'string'},
+    ],
+  },
+]
+
 export const textBlock = defineType({
   name: 'textBlock',
   title: 'Textblock',
@@ -53,13 +89,16 @@ export const textBlock = defineType({
       ],
     }),
     defineField({
-      name: 'text',
-      title: 'Text',
-      type: 'object',
-      fields: [
-        {name: 'de', title: 'Deutsch', type: 'text'},
-        {name: 'en', title: 'English', type: 'text'},
-      ],
+      name: 'content_de',
+      title: 'Text (Deutsch)',
+      type: 'array',
+      of: richTextContent,
+    }),
+    defineField({
+      name: 'content_en',
+      title: 'Text (English)',
+      type: 'array',
+      of: richTextContent,
     }),
     defineField({
       name: 'alignment',
