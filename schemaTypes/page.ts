@@ -1,5 +1,22 @@
 import {defineField, defineType} from 'sanity'
 
+// All available module types that can be added to pages
+const MODULE_TYPES = [
+  {type: 'reference', title: 'Hero Section', to: [{type: 'heroModule'}]},
+  {type: 'reference', title: 'Navigation', to: [{type: 'navigationModule'}]},
+  {type: 'reference', title: 'Philosophy Section', to: [{type: 'philosophyModule'}]},
+  {type: 'reference', title: 'Services Section', to: [{type: 'servicesModule'}]},
+  {type: 'reference', title: 'Team Section', to: [{type: 'teamModule'}]},
+  {type: 'reference', title: 'Doro Section', to: [{type: 'doroModule'}]},
+  {type: 'reference', title: 'Report Section', to: [{type: 'reportModule'}]},
+  {type: 'reference', title: 'Footer Section', to: [{type: 'footerModule'}]},
+  // Inline-Bausteine für freie Inhalte
+  {type: 'textBlock'},
+  {type: 'imageBlock'},
+  {type: 'ctaBlock'},
+  {type: 'richTextBlock'},
+]
+
 export default defineType({
   name: 'page',
   title: 'Seiten',
@@ -18,7 +35,7 @@ export default defineType({
       name: 'slug',
       title: 'URL-Pfad',
       type: 'slug',
-      description: 'z.B. "impressum", "datenschutz", "doro" → wird zu craid.de/impressum',
+      description: '"home" = Startseite. Sonst z.B. "impressum" → craid.de/impressum',
       options: {
         source: 'title.de',
         maxLength: 96,
@@ -26,114 +43,25 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'pageType',
-      title: 'Seiten-Typ',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Einfache Textseite', value: 'simple'},
-          {title: 'Modulare Seite (Bausteine)', value: 'modular'},
-        ],
-      },
-      initialValue: 'simple',
-    }),
-
-    // --- Einfache Textseite ---
-    defineField({
-      name: 'body_de',
-      title: 'Inhalt (Deutsch)',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          styles: [
-            {title: 'Normal', value: 'normal'},
-            {title: 'H2', value: 'h2'},
-            {title: 'H3', value: 'h3'},
-            {title: 'H4', value: 'h4'},
-            {title: 'Quote', value: 'blockquote'},
-          ],
-          marks: {
-            decorators: [
-              {title: 'Bold', value: 'strong'},
-              {title: 'Italic', value: 'em'},
-              {title: 'Underline', value: 'underline'},
-            ],
-            annotations: [
-              {
-                name: 'link',
-                title: 'Link',
-                type: 'object',
-                fields: [{name: 'href', title: 'URL', type: 'url'}],
-              },
-            ],
-          },
-        },
-        {
-          type: 'image',
-          options: {hotspot: true},
-          fields: [
-            {name: 'alt', title: 'Alt Text', type: 'string'},
-            {name: 'caption', title: 'Bildunterschrift', type: 'string'},
-          ],
-        },
-      ],
-      hidden: ({parent}) => parent?.pageType === 'modular',
+      name: 'showNav',
+      title: 'Navigation anzeigen',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Navigation oben auf der Seite einblenden',
     }),
     defineField({
-      name: 'body_en',
-      title: 'Inhalt (English)',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          styles: [
-            {title: 'Normal', value: 'normal'},
-            {title: 'H2', value: 'h2'},
-            {title: 'H3', value: 'h3'},
-            {title: 'H4', value: 'h4'},
-            {title: 'Quote', value: 'blockquote'},
-          ],
-          marks: {
-            decorators: [
-              {title: 'Bold', value: 'strong'},
-              {title: 'Italic', value: 'em'},
-              {title: 'Underline', value: 'underline'},
-            ],
-            annotations: [
-              {
-                name: 'link',
-                title: 'Link',
-                type: 'object',
-                fields: [{name: 'href', title: 'URL', type: 'url'}],
-              },
-            ],
-          },
-        },
-        {
-          type: 'image',
-          options: {hotspot: true},
-          fields: [
-            {name: 'alt', title: 'Alt Text', type: 'string'},
-            {name: 'caption', title: 'Caption', type: 'string'},
-          ],
-        },
-      ],
-      hidden: ({parent}) => parent?.pageType === 'modular',
+      name: 'showFooter',
+      title: 'Footer anzeigen',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Footer unten auf der Seite einblenden',
     }),
-
-    // --- Modulare Seite ---
     defineField({
       name: 'modules',
-      title: 'Bausteine',
+      title: 'Module & Bausteine',
+      description: 'Ziehe Module hierher und sortiere sie per Drag & Drop. Bestehende Sections (Hero, Team etc.) werden als Referenz eingefügt — Änderungen gelten für alle Seiten die dieses Modul nutzen.',
       type: 'array',
-      of: [
-        {type: 'heroBlock'},
-        {type: 'textBlock'},
-        {type: 'imageBlock'},
-        {type: 'ctaBlock'},
-      ],
-      hidden: ({parent}) => parent?.pageType !== 'modular',
+      of: MODULE_TYPES,
     }),
 
     // --- Meta ---
@@ -166,7 +94,7 @@ export default defineType({
     prepare({title, slug, enabled}) {
       return {
         title: title || 'Neue Seite',
-        subtitle: `/${slug || '...'}${enabled === false ? ' (deaktiviert)' : ''}`,
+        subtitle: `/${slug === 'home' ? '' : slug || '...'}${enabled === false ? ' (deaktiviert)' : ''}`,
       }
     },
   },

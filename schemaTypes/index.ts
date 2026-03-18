@@ -7,10 +7,10 @@ import reportModule from './reportModule'
 import navigationModule from './navigationModule'
 import footerModule from './footerModule'
 import page from './page'
-import {heroBlock, textBlock, imageBlock, ctaBlock} from './blocks'
+import {heroBlock, textBlock, imageBlock, ctaBlock, richTextBlock} from './blocks'
 
 export const schemaTypes = [
-  // Module (Startseite)
+  // Module (wiederverwendbare Sections)
   navigationModule,
   heroModule,
   philosophyModule,
@@ -21,9 +21,10 @@ export const schemaTypes = [
   footerModule,
   // Seiten
   page,
-  // Bausteine (für modulare Seiten)
+  // Bausteine (für freie Inhalte auf Seiten)
   heroBlock,
   textBlock,
   imageBlock,
   ctaBlock,
+  richTextBlock,
 ]

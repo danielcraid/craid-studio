@@ -122,6 +122,99 @@ export const imageBlock = defineType({
   },
 })
 
+export const richTextBlock = defineType({
+  name: 'richTextBlock',
+  title: 'Rich Text (Fließtext)',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'content_de',
+      title: 'Inhalt (Deutsch)',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'},
+            {title: 'H2', value: 'h2'},
+            {title: 'H3', value: 'h3'},
+            {title: 'H4', value: 'h4'},
+            {title: 'Quote', value: 'blockquote'},
+          ],
+          marks: {
+            decorators: [
+              {title: 'Bold', value: 'strong'},
+              {title: 'Italic', value: 'em'},
+              {title: 'Underline', value: 'underline'},
+            ],
+            annotations: [
+              {
+                name: 'link',
+                title: 'Link',
+                type: 'object',
+                fields: [{name: 'href', title: 'URL', type: 'url'}],
+              },
+            ],
+          },
+        },
+        {
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            {name: 'alt', title: 'Alt Text', type: 'string'},
+            {name: 'caption', title: 'Bildunterschrift', type: 'string'},
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'content_en',
+      title: 'Inhalt (English)',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'},
+            {title: 'H2', value: 'h2'},
+            {title: 'H3', value: 'h3'},
+            {title: 'H4', value: 'h4'},
+            {title: 'Quote', value: 'blockquote'},
+          ],
+          marks: {
+            decorators: [
+              {title: 'Bold', value: 'strong'},
+              {title: 'Italic', value: 'em'},
+              {title: 'Underline', value: 'underline'},
+            ],
+            annotations: [
+              {
+                name: 'link',
+                title: 'Link',
+                type: 'object',
+                fields: [{name: 'href', title: 'URL', type: 'url'}],
+              },
+            ],
+          },
+        },
+        {
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            {name: 'alt', title: 'Alt Text', type: 'string'},
+            {name: 'caption', title: 'Caption', type: 'string'},
+          ],
+        },
+      ],
+    }),
+  ],
+  preview: {
+    prepare() {
+      return {title: 'Rich Text', subtitle: 'Fließtext'}
+    },
+  },
+})
+
 export const ctaBlock = defineType({
   name: 'ctaBlock',
   title: 'Call to Action',
