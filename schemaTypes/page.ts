@@ -1,22 +1,5 @@
 import {defineField, defineType} from 'sanity'
 
-// All available module types that can be added to pages
-const MODULE_TYPES = [
-  {type: 'reference', title: 'Hero Section', to: [{type: 'heroModule'}]},
-  {type: 'reference', title: 'Navigation', to: [{type: 'navigationModule'}]},
-  {type: 'reference', title: 'Philosophy Section', to: [{type: 'philosophyModule'}]},
-  {type: 'reference', title: 'Services Section', to: [{type: 'servicesModule'}]},
-  {type: 'reference', title: 'Team Section', to: [{type: 'teamModule'}]},
-  {type: 'reference', title: 'Doro Section', to: [{type: 'doroModule'}]},
-  {type: 'reference', title: 'Report Section', to: [{type: 'reportModule'}]},
-  {type: 'reference', title: 'Footer Section', to: [{type: 'footerModule'}]},
-  // Inline-Bausteine für freie Inhalte
-  {type: 'textBlock'},
-  {type: 'imageBlock'},
-  {type: 'ctaBlock'},
-  {type: 'richTextBlock'},
-]
-
 export default defineType({
   name: 'page',
   title: 'Seiten',
@@ -35,7 +18,7 @@ export default defineType({
       name: 'slug',
       title: 'URL-Pfad',
       type: 'slug',
-      description: '"home" = Startseite. Sonst z.B. "impressum" → craid.de/impressum',
+      description: '"home" = Startseite. Sonst z.B. "impressum", "doro"',
       options: {
         source: 'title.de',
         maxLength: 96,
@@ -47,21 +30,40 @@ export default defineType({
       title: 'Navigation anzeigen',
       type: 'boolean',
       initialValue: true,
-      description: 'Navigation oben auf der Seite einblenden',
     }),
     defineField({
       name: 'showFooter',
       title: 'Footer anzeigen',
       type: 'boolean',
       initialValue: true,
-      description: 'Footer unten auf der Seite einblenden',
     }),
     defineField({
       name: 'modules',
       title: 'Module & Bausteine',
-      description: 'Ziehe Module hierher und sortiere sie per Drag & Drop. Bestehende Sections (Hero, Team etc.) werden als Referenz eingefügt — Änderungen gelten für alle Seiten die dieses Modul nutzen.',
+      description: 'Bestehende Sections als Referenz oder freie Bausteine hinzufuegen. Per Drag & Drop sortieren.',
       type: 'array',
-      of: MODULE_TYPES,
+      of: [
+        // Eine Referenz die auf ALLE Modul-Typen zeigen kann
+        {
+          type: 'reference',
+          title: 'Bestehendes Modul',
+          to: [
+            {type: 'heroModule'},
+            {type: 'navigationModule'},
+            {type: 'philosophyModule'},
+            {type: 'servicesModule'},
+            {type: 'teamModule'},
+            {type: 'doroModule'},
+            {type: 'reportModule'},
+            {type: 'footerModule'},
+          ],
+        },
+        // Inline-Bausteine
+        {type: 'textBlock'},
+        {type: 'imageBlock'},
+        {type: 'ctaBlock'},
+        {type: 'richTextBlock'},
+      ],
     }),
 
     // --- Meta ---
@@ -69,14 +71,12 @@ export default defineType({
       name: 'seoTitle',
       title: 'SEO Titel',
       type: 'string',
-      description: 'Wird im Browser-Tab angezeigt (optional)',
     }),
     defineField({
       name: 'seoDescription',
       title: 'SEO Beschreibung',
       type: 'text',
       rows: 2,
-      description: 'Für Google-Suchergebnisse (optional)',
     }),
     defineField({
       name: 'enabled',
