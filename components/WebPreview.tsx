@@ -3,7 +3,7 @@ import {type ComponentType} from 'react'
 const PREVIEW_URL = 'https://craidrelaunch2026v002.vercel.app'
 
 const sectionMap: Record<string, string> = {
-  heroModule: '',
+  heroModule: '#hero',
   navigationModule: '',
   philosophyModule: '#philosophy',
   servicesModule: '#services',
@@ -14,9 +14,21 @@ const sectionMap: Record<string, string> = {
 }
 
 export const WebPreview: ComponentType<any> = (props) => {
-  const type = props.document?.displayed?._type || ''
-  const anchor = sectionMap[type] || ''
-  const url = `${PREVIEW_URL}/${anchor}`
+  const doc = props.document?.displayed
+  const type = doc?._type || ''
+
+  let url = PREVIEW_URL
+
+  if (type === 'page') {
+    // Pages: use slug as path, "home" = startseite
+    const slug = doc?.slug?.current
+    if (slug && slug !== 'home') {
+      url = `${PREVIEW_URL}/${slug}`
+    }
+  } else if (sectionMap[type] !== undefined) {
+    // Module: show homepage with anchor to section
+    url = `${PREVIEW_URL}/${sectionMap[type]}`
+  }
 
   return (
     <div style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column'}}>

@@ -14,6 +14,7 @@ const previewTypes = [
   'doroModule',
   'reportModule',
   'footerModule',
+  'page',
 ]
 
 // Add Website Preview tab to all module documents
