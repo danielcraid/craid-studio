@@ -7,6 +7,7 @@ import reportModule from './reportModule'
 import navigationModule from './navigationModule'
 import footerModule from './footerModule'
 import page from './page'
+import serviceDetail from './serviceDetail'
 import {heroBlock, textBlock, imageBlock, ctaBlock, richTextBlock} from './blocks'
 
 export const schemaTypes = [
@@ -21,6 +22,7 @@ export const schemaTypes = [
   footerModule,
   // Seiten
   page,
+  serviceDetail,
   // Bausteine (für freie Inhalte auf Seiten)
   heroBlock,
   textBlock,

@@ -22,6 +22,12 @@ function getPreviewUrl(doc: any) {
     return `${PREVIEW_URL}/preview/${type}`
   }
 
+  // Service Detail → /services/<slug>
+  if (type === 'serviceDetail') {
+    const slug = doc?.slug?.current
+    return slug ? `${PREVIEW_URL}/services/${slug}` : PREVIEW_URL
+  }
+
   // Page → show the page by slug
   if (type === 'page') {
     const slug = doc?.slug?.current

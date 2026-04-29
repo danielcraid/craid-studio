@@ -15,6 +15,7 @@ const previewTypes = [
   'reportModule',
   'footerModule',
   'page',
+  'serviceDetail',
 ]
 
 // Live Preview as DEFAULT view, Form as second tab
