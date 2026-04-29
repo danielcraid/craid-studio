@@ -48,9 +48,17 @@ export default defineType({
       group: 'identity',
       validation: (R) => R.required().regex(/^\d{2}$/, {name: 'two digits'}),
     }),
-    {...bilingualString('title', 'Title', 'z.B. "Delivery Factory"'), group: 'identity'},
+    {...bilingualString('title', 'Title', 'z.B. "Agentic Experience Factory"'), group: 'identity'},
     {...bilingualString('taglinePart1', 'Tagline Teil 1 (Ink)', 'Erste Hälfte des Split-Color Subtitles, dunkler Ton'), group: 'identity'},
     {...bilingualString('taglinePart2', 'Tagline Teil 2 (Slate)', 'Zweite Hälfte, gemuteter Ton'), group: 'identity'},
+    defineField({
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      description: 'Großes Bild oben rechts neben dem Hero-Text. Atmosphärisch (Smoke / Cloud).',
+      group: 'identity',
+      options: {hotspot: true},
+    }),
     {...bilingualText('pitch', 'Pitch', 3, '1-2 Sätze Hero-Subtext im CRAiD-Voice'), group: 'identity'},
     defineField({
       name: 'heroStats',
@@ -136,7 +144,7 @@ export default defineType({
     {...bilingualText('whatWeDoIntro', 'Intro Text (optional)', 3), group: 'whatwedo'},
     defineField({
       name: 'whatWeDoCards',
-      title: 'Cards (3-4 Stück)',
+      title: 'Phase Cards (4 Stück bei AEF)',
       type: 'array',
       group: 'whatwedo',
       validation: (R) => R.max(4),
@@ -144,11 +152,23 @@ export default defineType({
         {
           type: 'object',
           fields: [
-            bilingualString('label', 'TYPE/PHASE Label', 'klein, uppercase, pink'),
-            bilingualString('title', 'Card Titel'),
-            bilingualText('description', 'Beschreibung', 4),
+            {
+              name: 'phaseNumber',
+              title: 'Phase Number',
+              type: 'string',
+              description: 'z.B. "01", "02"',
+            },
+            bilingualString('mantra', 'Mantra Step', 'z.B. "Get ready to build"'),
+            bilingualString('title', 'Phase Titel', 'z.B. "Envision"'),
+            bilingualText('description', 'Beschreibung', 5),
+            {
+              name: 'iconName',
+              title: 'Lucide Icon Name',
+              type: 'string',
+              description: 'z.B. "Compass", "Layers", "Hammer", "Rocket". Aus lucide-react.',
+            },
           ],
-          preview: {select: {title: 'title.de', subtitle: 'label.de'}},
+          preview: {select: {title: 'title.de', subtitle: 'mantra.de'}},
         },
       ],
     }),
@@ -171,10 +191,10 @@ export default defineType({
       ],
     }),
 
-    // ──────────────────────────── FRAMEWORK ────────────────────────────
+    // ──────────────────────────── FRAMEWORK / BUILDING BLOCKS ────────────────────────────
     defineField({
       name: 'frameworkEnabled',
-      title: 'Framework Section anzeigen?',
+      title: 'Framework / Building Blocks Section anzeigen?',
       type: 'boolean',
       initialValue: false,
       group: 'framework',
@@ -184,19 +204,33 @@ export default defineType({
     {...bilingualString('frameworkHeadlinePart2', 'Headline Teil 2 (Slate)'), group: 'framework'},
     {...bilingualText('frameworkIntro', 'Intro Text', 3), group: 'framework'},
     defineField({
+      name: 'frameworkImage',
+      title: 'Framework Image (Hexagon / Diagram)',
+      type: 'image',
+      description: 'Optional. Visualisierung der Building Blocks (z.B. Hexagon-Modell).',
+      group: 'framework',
+      options: {hotspot: true},
+    }),
+    defineField({
       name: 'frameworkCards',
-      title: 'Framework Cards',
+      title: 'Framework / Building Block Cards (bei AEF: 6 Säulen)',
       type: 'array',
       group: 'framework',
-      validation: (R) => R.max(4),
+      validation: (R) => R.max(6),
       of: [
         {
           type: 'object',
           fields: [
-            {name: 'anchor', title: 'Visueller Anker', type: 'string', description: 'z.B. "A", "B", "C" oder "01", "02"'},
+            {name: 'anchor', title: 'Visueller Anker', type: 'string', description: 'z.B. "01", "02" oder "A", "B"'},
             bilingualString('label', 'Sub-Label'),
             bilingualString('title', 'Card Titel'),
             bilingualText('description', 'Beschreibung', 4),
+            {
+              name: 'iconName',
+              title: 'Lucide Icon Name',
+              type: 'string',
+              description: 'z.B. "Target", "Network", "Code", "Workflow", "Users", "HeartHandshake".',
+            },
           ],
           preview: {select: {title: 'title.de', subtitle: 'anchor'}},
         },
@@ -225,6 +259,25 @@ export default defineType({
     {...bilingualString('inPracticeHeadlinePart1', 'Headline Teil 1 (Ink)'), group: 'inpractice'},
     {...bilingualString('inPracticeHeadlinePart2', 'Headline Teil 2 (Slate)'), group: 'inpractice'},
     {...bilingualText('inPracticeIntro', 'Intro Text', 3), group: 'inpractice'},
+    defineField({
+      name: 'inPracticeImage',
+      title: 'In Practice Image',
+      type: 'image',
+      description: 'Atmosphärisches Bild oben in der Section.',
+      group: 'inpractice',
+      options: {hotspot: true},
+    }),
+    defineField({
+      name: 'referencesNote',
+      title: 'References Note',
+      type: 'object',
+      group: 'inpractice',
+      description: 'Hinweis auf Referenzen unterhalb der Cards.',
+      fields: [
+        {name: 'de', title: 'Deutsch', type: 'string'},
+        {name: 'en', title: 'English', type: 'string'},
+      ],
+    }),
     defineField({
       name: 'inPracticeCards',
       title: 'In-Practice Cards (zeigt CRAiD Agents bei der Arbeit)',
