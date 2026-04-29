@@ -288,11 +288,18 @@ export default defineType({
         {
           type: 'object',
           fields: [
-            bilingualString('tag', 'Tag', 'z.B. "Doro · Apr 2026"'),
+            {
+              name: 'avatar',
+              title: 'Agent Avatar',
+              type: 'image',
+              description: 'Klein, kreisrund — das Gesicht des Agents.',
+              options: {hotspot: true},
+            },
+            bilingualString('tag', 'Tag', 'z.B. "Doro · Chief of Staff"'),
             bilingualString('title', 'Titel'),
             bilingualText('description', 'Beschreibung', 4),
           ],
-          preview: {select: {title: 'title.de', subtitle: 'tag.de'}},
+          preview: {select: {title: 'title.de', subtitle: 'tag.de', media: 'avatar'}},
         },
       ],
     }),
