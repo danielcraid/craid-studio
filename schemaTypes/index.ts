@@ -8,6 +8,7 @@ import navigationModule from './navigationModule'
 import footerModule from './footerModule'
 import page from './page'
 import serviceDetail from './serviceDetail'
+import insightItem from './insightItem'
 import {heroBlock, textBlock, imageBlock, ctaBlock, richTextBlock} from './blocks'
 
 export const schemaTypes = [
@@ -23,6 +24,7 @@ export const schemaTypes = [
   // Seiten
   page,
   serviceDetail,
+  insightItem,
   // Bausteine (für freie Inhalte auf Seiten)
   heroBlock,
   textBlock,

@@ -25,10 +25,16 @@ export default defineType({
           fields: [
             {name: 'label_de', title: 'Label (DE)', type: 'string'},
             {name: 'label_en', title: 'Label (EN)', type: 'string'},
-            {name: 'anchor', title: 'Anker (z.B. #philosophy)', type: 'string'},
+            {
+              name: 'href',
+              title: 'Ziel (Pfad oder Anker)',
+              type: 'string',
+              description:
+                'Interne Route (z.B. "/contact", "/insights"), Anker auf Home (z.B. "#services") oder externe URL (https://...). Anker funktionieren auch von Sub-Pages aus — sie werden automatisch zur Home-Page aufgelöst.',
+            },
           ],
           preview: {
-            select: {title: 'label_de'},
+            select: {title: 'label_de', subtitle: 'href'},
           },
         },
       ],
@@ -40,7 +46,7 @@ export default defineType({
       fields: [
         {name: 'label_de', title: 'Label (DE)', type: 'string'},
         {name: 'label_en', title: 'Label (EN)', type: 'string'},
-        {name: 'url', title: 'URL', type: 'url'},
+        {name: 'url', title: 'URL', type: 'string', description: 'Pfad (z.B. "/contact") oder externe URL (https://...).'},
       ],
     }),
   ],

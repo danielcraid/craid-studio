@@ -52,6 +52,13 @@ export default defineType({
             {name: 'outcomes_en', title: 'Outcomes (EN)', type: 'string'},
             {name: 'badge', title: 'Badge (optional)', type: 'string', description: 'z.B. "Outcome-based"'},
             {name: 'isHighlighted', title: 'Hervorgehoben', type: 'boolean', initialValue: false},
+            {
+              name: 'slug',
+              title: 'Service-Page Slug (optional)',
+              type: 'string',
+              description:
+                'Slug der zugehörigen Service-Page (z.B. "agentic-experience-strategy"). Macht die Card auf /services/[slug] klickbar. Leer lassen, wenn keine Detail-Page existiert.',
+            },
           ],
           preview: {
             select: {title: 'title_de', subtitle: 'number'},

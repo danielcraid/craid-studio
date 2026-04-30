@@ -22,11 +22,26 @@ export default defineType({
         {
           type: 'object',
           fields: [
-            {name: 'label', title: 'Label', type: 'string'},
-            {name: 'url', title: 'URL', type: 'string'},
+            {
+              name: 'label',
+              title: 'Label (sprachneutral, optional)',
+              type: 'string',
+              description: 'Wenn gesetzt, wird dieses Label in beiden Sprachen verwendet. Sonst label_de / label_en nutzen.',
+            },
+            {name: 'label_de', title: 'Label (DE)', type: 'string'},
+            {name: 'label_en', title: 'Label (EN)', type: 'string'},
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'string',
+              description: 'Interne Route ("/contact", "/insights"), Anker auf Home ("#services") oder externe URL ("https://...").',
+            },
           ],
           preview: {
-            select: {title: 'label'},
+            select: {title: 'label', subtitle: 'url'},
+            prepare({title, subtitle}: {title?: string; subtitle?: string}) {
+              return {title: title || subtitle || 'Quick Link', subtitle}
+            },
           },
         },
       ],
