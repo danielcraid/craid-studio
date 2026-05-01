@@ -59,7 +59,12 @@ export default defineType({
       fields: [
         {name: 'label_de', title: 'Label (DE)', type: 'string'},
         {name: 'label_en', title: 'Label (EN)', type: 'string'},
-        {name: 'url', title: 'URL', type: 'url'},
+        {
+          name: 'url',
+          title: 'URL',
+          type: 'string',
+          description: 'Interner Pfad (z.B. "/office") oder externe URL.',
+        },
       ],
     }),
     defineField({
