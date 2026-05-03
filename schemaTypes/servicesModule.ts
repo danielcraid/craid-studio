@@ -45,6 +45,18 @@ export default defineType({
             {name: 'number', title: 'Nummer (z.B. 01)', type: 'string'},
             {name: 'title_de', title: 'Titel (DE)', type: 'string'},
             {name: 'title_en', title: 'Title (EN)', type: 'string'},
+            {
+              name: 'badge_de',
+              title: 'Badge / Klartext-Hook (DE)',
+              type: 'string',
+              description: 'Kleiner Pink-Pill rechts vom Title, z.B. "Werdet zum Vordenker", "Wo passt KI?", "Outcome-based".',
+            },
+            {
+              name: 'badge_en',
+              title: 'Badge / Klartext-Hook (EN)',
+              type: 'string',
+              description: 'Small pink-pill next to title, e.g. "Become an AI thinker", "Where does AI fit?", "Outcome-based".',
+            },
             {name: 'description_de', title: 'Beschreibung (DE)', type: 'text', rows: 4},
             {name: 'description_en', title: 'Description (EN)', type: 'text', rows: 4},
             {name: 'tags', title: 'Tags', type: 'array', of: [{type: 'string'}]},
