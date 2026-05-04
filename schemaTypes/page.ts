@@ -26,6 +26,14 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'headerImage',
+      title: 'Header-Bild (optional)',
+      type: 'image',
+      description:
+        'Wenn gesetzt: rendert oben einen Page-Header mit Title (H1) plus horizontalem Brand-Image darunter. Empfohlen für Legal/Info-Pages (Impressum, Datenschutz). Bleibt leer → keine Hero-Sektion, modules werden direkt gerendert.',
+      options: {hotspot: true},
+    }),
+    defineField({
       name: 'showNav',
       title: 'Navigation anzeigen',
       type: 'boolean',
