@@ -10,6 +10,7 @@ const previewTypes = [
   'navigationModule',
   'philosophyModule',
   'servicesModule',
+  'venturesModule',
   'teamModule',
   'doroModule',
   'reportModule',

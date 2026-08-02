@@ -1,6 +1,8 @@
 import heroModule from './heroModule'
+import purposeModule from './purposeModule'
 import philosophyModule from './philosophyModule'
 import servicesModule from './servicesModule'
+import venturesModule from './venturesModule'
 import teamModule from './teamModule'
 import doroModule from './doroModule'
 import reportModule from './reportModule'
@@ -15,8 +17,10 @@ export const schemaTypes = [
   // Module (wiederverwendbare Sections)
   navigationModule,
   heroModule,
+  purposeModule,
   philosophyModule,
   servicesModule,
+  venturesModule,
   teamModule,
   doroModule,
   reportModule,
